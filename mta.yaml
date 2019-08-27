@@ -1,3 +1,16 @@
 ID: cds_employee_address
 _schema-version: '2.1'
 version: 0.0.1
+
+modules:
+ - name: user_db
+   type: hdb
+   path: user_db
+   requires:
+    - name: hdi_user_db
+
+resources:
+ - name: hdi_user_db
+   properties:
+      hdi-container-name: ${service-name}
+   type: com.sap.xs.hdi-container
