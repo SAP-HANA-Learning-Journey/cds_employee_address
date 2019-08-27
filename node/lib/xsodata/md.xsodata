@@ -1,0 +1,10 @@
+service {
+    "MD.Address" as "Addresses"
+        navigates ("EmployeeAddress" as "MyEmployee");
+    "MD.Employee" as "Employees"
+        navigates ("EmployeeAddress" as "MyAddress");
+    "MD.EmployeeDetails" as "EmployeeDetails" key ("id");
+    association "EmployeeAddress" with referential constraint
+        principal "Employees"("address.id") multiplicity "1"
+        dependent "Addresses"("id") multiplicity "0..1";
+}
