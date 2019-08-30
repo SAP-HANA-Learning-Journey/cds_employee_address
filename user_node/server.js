@@ -1,12 +1,29 @@
 /*eslint no-console: 0*/
 "use strict";
 
-var http = require("http");
+var express = require("express");
+var app = express();
 var port = process.env.PORT || 3000;
 
-http.createServer(function (req, res) {
-  res.writeHead(200, {"Content-Type": "text/plain"});
-  res.end("Hello Node.js World\n");
-}).listen(port);
+app.listen(port, function() {
+	console.log("Listening on port " + port);
+});
 
-console.log("Server listening on port %d", port);
+var xsenv = require("@sap/xsenv");
+var services = xsenv.getServices({
+	hana: {
+		tag: "hana"
+	}
+});
+
+var hdbext = require("@sap/hdbext");
+app.use("/", hdbext.middleware(services.hana));
+
+app.get("/", function(req, res, next) {
+	req.db.exec("SELECT COUNT(\"id\") AS COUNT FROM \"MD.Employee\"", function(err, rows) {
+		if(err)	{
+			return next(err);
+		}
+		res.send("Current employees: " + rows[0].COUNT);
+	});
+});
