@@ -17,6 +17,15 @@ modules:
     requires:
       - name: user_db
       - name: hdi_user_db
+
+  - name: user_node
+    type: nodejs
+    path: user_node
+    provides:
+     - name: user_node_api
+       properties:
+          url: ${default-url}
+
 resources:
   - name: hdi_user_db
     properties:
