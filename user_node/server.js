@@ -19,8 +19,8 @@ var services = xsenv.getServices({
 var hdbext = require("@sap/hdbext");
 app.use("/", hdbext.middleware(services.hana));
 
-app.get("/", function(req, res, next) {
-	req.db.exec("SELECT COUNT(\"id\") AS COUNT FROM \"MD.Employee\"", function(err, rows) {
+app.get("/", (req, res, next) => {
+	req.db.exec("SELECT COUNT(\"id\") AS COUNT FROM \"MD.Employee\"", (err, rows) => {
 		if(err)	{
 			return next(err);
 		}
