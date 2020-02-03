@@ -27,6 +27,9 @@ modules:
     requires:
       - name: user_db
       - name: hdi_user_db
+
+  
+
 resources:
   - name: hdi_user_db
     properties:
